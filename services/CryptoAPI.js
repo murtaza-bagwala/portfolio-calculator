@@ -27,7 +27,10 @@ const convertCryptoToUSD = async (options) => {
   if (options.timestamp) {
     url = `https://min-api.cryptocompare.com/data/pricehistorical?fsym=${options.token}&tsyms=USD&ts=${options.timestamp}&api_key=${API_KEY}`;
   }
-  await doRequest(url);
+  const conversionRate = await doRequest(url);
+  return options.timestamp
+    ? conversionRate[options.token]["USD"]
+    : conversionRate["USD"];
 };
 
 module.exports = convertCryptoToUSD;

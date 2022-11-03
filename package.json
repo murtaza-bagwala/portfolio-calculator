@@ -11,7 +11,7 @@
     "lint:fix": "eslint --fix ."
   },
   "bin": {
-    "hello": "./bin/index.js"
+    "portfolioCalculator": "./bin/index.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,8 @@
   "homepage": "https://github.com/murtaza-bagwala/portfolio-calculator#readme",
   "dependencies": {
     "currency.js": "^2.0.4",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "yargs": "^17.6.1"
   },
   "devDependencies": {
     "eslint": "^8.26.0",

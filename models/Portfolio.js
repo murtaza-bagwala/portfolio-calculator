@@ -21,6 +21,10 @@ class Portfolio {
   subtractAmount(amount) {
     this.amount = this.amount.subtract(amount);
   }
+
+  getAmountConvertedToUSD(usdConversionRate) {
+    return this.amount.multiply(usdConversionRate).format();
+  }
 }
 
 module.exports = Portfolio;

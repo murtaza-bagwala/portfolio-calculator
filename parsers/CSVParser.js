@@ -4,6 +4,7 @@ const readline = require("readline");
 function parse(filePath, strategy, option) {
   return new Promise((resolve, reject) => {
     const readStream = fs.createReadStream(filePath, "utf-8");
+    readStream.on("error", (error) => reject(error));
     const readlineInterface = readline.createInterface({ input: readStream });
     this.portfoliosByToken = {};
     this.option = option;

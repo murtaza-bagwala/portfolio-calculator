@@ -34,7 +34,7 @@ This app uses :-
 
 I am using `yargs` to fetch the command line arguments and then validating the received arguments in `.bin/start.js`. for example if `date` is not valid then it throws an error and shows you the exact format which is `YYYY-MM-DD`. Also, currently as our [transactions.csv](https://s3-ap-southeast-1.amazonaws.com/static.propine.com/transactions.csv.zip) only contains 3 types of cryptocurrencies `BTC`, `ETH` and `XRP`, thats why I am validating that too but we can remove that validation if we need to support any other cryptocurrencies in future. For now currency is set as `USD` by default but in future we can take it as an argument too, rest of the code is generalized with default set as `USD`.
 
-![alt](help.png)
+![alt](images/help.png)
 
 ### Model
 
@@ -54,25 +54,25 @@ So we have 4 types of strategies :-
 
 If no option is passed then this strategy will be called to calculate the portfolio values converted to the `USD` for all the tokens. 
 
-![alt](no.png)
+![alt](images/no.png)
 
 #### allPortfoliosByDate
 
 If date option is passed then this strategy will be called to calculate the portfolio values converted to the `USD` for the given date.
 
-![alt](d.png)
+![alt](images/d.png)
 
 #### portfolioByToken
 
 If token option is passed then this strategy will be called to calculate the portfolio value converted to the latest `USD` for the given token.
 
-![alt](t.png)
+![alt](images/t.png)
 
 #### portfolioByDateAndToken
 
 If token and date both options are passed then this strategy will be called to calculate the portfolio value converted to the `USD` for the given date and token.
 
-![alt](td.png)
+![alt](images/td.png)
 
 ### CSV Parser
 
@@ -102,6 +102,10 @@ There are various pure utility functions I have created like :-
 I have written testcases for all the modules, used `expect` for assertions and `sinon stub` to stub external API calls.
 
 Tests can be found in `./test`.
+
+### Formatting
+
+Added `eslint` and `prettier` for formattng and conventions.
 
 
 

@@ -76,7 +76,7 @@ If token and date both options are passed then this strategy will be called to c
 
 ### CSV Parser
 
-To parse this kind of big CSV file I am using Reactive approach using `NodeJS streams` API. Generally [reactive/event-driven](linkedin.com/pulse/reactive-programming-step-ahead-functional-murtaza-bagwala/) approaches work on 3 events `data`, `error` and `close` and I am passing `strategy` as a callback function to `CSVParser` for `data` event. Code can be found in `./parsers/CSVParser.js`.
+To parse this kind of big CSV file I am using Reactive approach using `NodeJS streams` API. Generally [reactive/event-driven](https://linkedin.com/pulse/reactive-programming-step-ahead-functional-murtaza-bagwala/) approaches work on 3 events `data`, `error` and `close` and I am passing `strategy` as a callback function to `CSVParser` for `data` event. Code can be found in `./parsers/CSVParser.js`.
 
 ### External Services
 

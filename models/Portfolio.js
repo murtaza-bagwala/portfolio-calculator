@@ -22,8 +22,11 @@ class Portfolio {
     this.amount = this.amount.subtract(amount);
   }
 
-  getAmountConvertedToUSD(usdConversionRate) {
-    return this.amount.multiply(usdConversionRate).format();
+  getAmountConvertedToCurrency(usdConversionRate, currency = "USD") {
+    if (currency === "USD") {
+      return this.amount.multiply(usdConversionRate).format();
+    }
+    return `${this.amount.multiply(usdConversionRate).value}`;
   }
 }
 

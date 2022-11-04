@@ -18,37 +18,37 @@ const getStrategyBasedOnOptions = (options) => {
   }
 };
 
-async function init(options, filePath) {
+async function init(options, filePath, currency = "USD") {
   console.log("Fetching portfolio value for tokens in USD....");
   options = options || {};
   if (options.date) {
     options.timestamp = dateToTimestampConvertor(options.date);
   }
-  
+
   const strategy = getStrategyBasedOnOptions(options);
   try {
     const portfoliosByToken = await readAndParse(filePath, strategy, options);
 
-    const usdAmountPerToken = {};
+    const convertedAmountPerToken = {};
 
     for (const [key, portfolio] of Object.entries(portfoliosByToken)) {
       const apiOptions = {
         token: key,
         timestamp: options.timestamp ? options.timestamp : null,
       };
-      const usdConversionRate = await CryptoAPI.convertCryptoToUSD(apiOptions);
+      const conversionRate = await CryptoAPI.getCryptoToCurrencyConversionRate(apiOptions, currency);
       console.log(
-        `USD conversion rate for token ${key}, is ${usdConversionRate} `
+        `${currency} conversion rate for token ${key}, is ${conversionRate} `
       );
-      const usdConvertedAmount =
-        portfolio.getAmountConvertedToUSD(usdConversionRate);
+      const convertedAmount =
+        portfolio.getAmountConvertedToCurrency(conversionRate, currency);
       console.log(
-        `for token ${key} converted to USD amount is ${usdConvertedAmount}`
+        `for token ${key} converted to ${currency} amount is ${convertedAmount}`
       );
-      usdAmountPerToken[key] = usdConvertedAmount;
+      convertedAmountPerToken[key] = convertedAmount;
     }
 
-    return usdAmountPerToken;
+    return convertedAmountPerToken;
   } catch (error) {
     console.log("error occured", error.message);
     return null;

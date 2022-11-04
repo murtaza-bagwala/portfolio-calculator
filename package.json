@@ -11,7 +11,7 @@
     "lint:fix": "eslint --fix ."
   },
   "bin": {
-    "portfolioCalculatorInUSD": "./bin/start.js"
+    "portfolioCalculatorInCurrency": "./bin/start.js"
   },
   "repository": {
     "type": "git",

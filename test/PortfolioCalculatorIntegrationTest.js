@@ -11,10 +11,10 @@ describe("Integration test", () => {
       const optionXRP = { token: "XRP", timestamp: null };
       const optionETH = { token: "ETH", timestamp: null };
 
-      CryptoAPI.convertCryptoToUSD = sinon.stub();
-      CryptoAPI.convertCryptoToUSD.withArgs(optionBTC).returns(10000);
-      CryptoAPI.convertCryptoToUSD.withArgs(optionXRP).returns(1.89);
-      CryptoAPI.convertCryptoToUSD.withArgs(optionETH).returns(0.367);
+      CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionBTC, "USD").returns(10000);
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionXRP, "USD").returns(1.89);
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionETH, "USD").returns(0.367);
 
       const result = await init({}, "./test/fixtures/transactionsTest.csv");
       expect(Object.entries(result).length).to.equal(3);
@@ -35,10 +35,10 @@ describe("Integration test", () => {
       const optionXRP = { token: "XRP", timestamp: 1572047999 };
       const optionETH = { token: "ETH", timestamp: 1572047999 };
 
-      CryptoAPI.convertCryptoToUSD = sinon.stub();
-      CryptoAPI.convertCryptoToUSD.withArgs(optionBTC).returns(80000);
-      CryptoAPI.convertCryptoToUSD.withArgs(optionXRP).returns(0.89);
-      CryptoAPI.convertCryptoToUSD.withArgs(optionETH).returns(0.267);
+      CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionBTC, "USD").returns(80000);
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionXRP, "USD").returns(0.89);
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionETH, "USD").returns(0.267);
 
       const result = await init(
         { date: "2019-10-25" },
@@ -59,8 +59,8 @@ describe("Integration test", () => {
   describe("if date, token options and filePath are passed then", () => {
     it("it fetches portfoliosByToken for the given token and their converted amount to USD for that day", async () => {
       const optionBTC = { token: "BTC", timestamp: 1572047999 };
-      CryptoAPI.convertCryptoToUSD = sinon.stub();
-      CryptoAPI.convertCryptoToUSD.withArgs(optionBTC).returns(70000);
+      CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionBTC, "USD").returns(70000);
 
       const result = await init(
         { token: "BTC", date: "2019-10-25" },
@@ -77,8 +77,8 @@ describe("Integration test", () => {
   describe("if token options and filePath are passed then", () => {
     it("it fetches portfoliosByToken for the given token and their converted amount to USD", async () => {
       const optionXRP = { token: "BTC", timestamp: null };
-      CryptoAPI.convertCryptoToUSD = sinon.stub();
-      CryptoAPI.convertCryptoToUSD.withArgs(optionXRP).returns(10000);
+      CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
+      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionXRP, "USD").returns(10000);
 
       const result = await init(
         { token: "BTC" },
@@ -95,8 +95,8 @@ describe("Integration test", () => {
   describe("if external API gets failed then", () => {
     it("it returns null", async () => {
       const optionXRP = { token: "BTC", timestamp: null };
-      CryptoAPI.convertCryptoToUSD = sinon.stub();
-      CryptoAPI.convertCryptoToUSD.throws(
+      CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
+      CryptoAPI.getCryptoToCurrencyConversionRate.throws(
         new Error("External Service unavailable")
       );
       const result = await init(

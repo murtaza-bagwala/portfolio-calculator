@@ -12,9 +12,15 @@ describe("Integration test", () => {
       const optionETH = { token: "ETH", timestamp: null };
 
       CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionBTC, "USD").returns(10000);
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionXRP, "USD").returns(1.89);
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionETH, "USD").returns(0.367);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionBTC, "USD")
+        .returns(10000);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionXRP, "USD")
+        .returns(1.89);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionETH, "USD")
+        .returns(0.367);
 
       const result = await init({}, "./test/fixtures/transactionsTest.csv");
       expect(Object.entries(result).length).to.equal(3);
@@ -36,9 +42,15 @@ describe("Integration test", () => {
       const optionETH = { token: "ETH", timestamp: 1572047999 };
 
       CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionBTC, "USD").returns(80000);
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionXRP, "USD").returns(0.89);
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionETH, "USD").returns(0.267);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionBTC, "USD")
+        .returns(80000);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionXRP, "USD")
+        .returns(0.89);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionETH, "USD")
+        .returns(0.267);
 
       const result = await init(
         { date: "2019-10-25" },
@@ -60,7 +72,9 @@ describe("Integration test", () => {
     it("it fetches portfoliosByToken for the given token and their converted amount to USD for that day", async () => {
       const optionBTC = { token: "BTC", timestamp: 1572047999 };
       CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionBTC, "USD").returns(70000);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionBTC, "USD")
+        .returns(70000);
 
       const result = await init(
         { token: "BTC", date: "2019-10-25" },
@@ -78,7 +92,9 @@ describe("Integration test", () => {
     it("it fetches portfoliosByToken for the given token and their converted amount to USD", async () => {
       const optionXRP = { token: "BTC", timestamp: null };
       CryptoAPI.getCryptoToCurrencyConversionRate = sinon.stub();
-      CryptoAPI.getCryptoToCurrencyConversionRate.withArgs(optionXRP, "USD").returns(10000);
+      CryptoAPI.getCryptoToCurrencyConversionRate
+        .withArgs(optionXRP, "USD")
+        .returns(10000);
 
       const result = await init(
         { token: "BTC" },

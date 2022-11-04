@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const init = require("./index")
+const init = require("./index");
 const yargs = require("yargs");
 const isDateValid = require("../utils/DateValidator");
 const { SUPPORTED_TOKENS } = require("../constants");
@@ -30,6 +30,5 @@ const cliOptions = yargs
 
     return true;
   }).argv;
-
 
 init(cliOptions, "./transactions.csv");

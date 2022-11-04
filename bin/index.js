@@ -36,12 +36,17 @@ async function init(options, filePath, currency = "USD") {
         token: key,
         timestamp: options.timestamp ? options.timestamp : null,
       };
-      const conversionRate = await CryptoAPI.getCryptoToCurrencyConversionRate(apiOptions, currency);
+      const conversionRate = await CryptoAPI.getCryptoToCurrencyConversionRate(
+        apiOptions,
+        currency
+      );
       console.log(
         `${currency} conversion rate for token ${key}, is ${conversionRate} `
       );
-      const convertedAmount =
-        portfolio.getAmountConvertedToCurrency(conversionRate, currency);
+      const convertedAmount = portfolio.getAmountConvertedToCurrency(
+        conversionRate,
+        currency
+      );
       console.log(
         `for token ${key} converted to ${currency} amount is ${convertedAmount}`
       );

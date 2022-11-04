@@ -22,7 +22,11 @@ describe("Testing the Portfolio Functions", function () {
   it("getAmountConvertedToCurrency converts the amount to the currency, defaults to USD", () => {
     const portfolio = new Portfolio("BTC");
     portfolio.addAmount(0.456394);
-    expect("$4,563.940000").to.equal(portfolio.getAmountConvertedToCurrency(10000));
-    expect("4563.94").to.equal(portfolio.getAmountConvertedToCurrency(10000, "JPY"));
+    expect("$4,563.940000").to.equal(
+      portfolio.getAmountConvertedToCurrency(10000)
+    );
+    expect("4563.94").to.equal(
+      portfolio.getAmountConvertedToCurrency(10000, "JPY")
+    );
   });
 });

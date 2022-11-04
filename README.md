@@ -1,4 +1,5 @@
-# portfolio-calculator 
+# portfolio-calculator
+
 ![Bitcoin](https://img.shields.io/badge/Bitcoin-000?style=for-the-badge&logo=bitcoin&logoColor=white)
 ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)
 ![Xrp](https://img.shields.io/badge/Xrp-black?style=for-the-badge&logo=xrp&logoColor=white)
@@ -7,7 +8,7 @@ NodeJS command line app to find portfolio details based on the given parameters.
 
 ## Prerequisites
 
-This app uses :- 
+This app uses :-
 
 - NodeJS 14.17.0.
 - Free Crypto API from [CryptoCompareAPI](https://min-api.cryptocompare.com/documentation) to fetch the latest currency value.
@@ -29,7 +30,6 @@ This app uses :-
 
 - `npm run test` to run the tests.
 
-
 ## Application Design
 
 I am using `yargs` to fetch the command line arguments and then validating the received arguments in `.bin/start.js`. for example if `date` is not valid then it throws an error and shows you the exact format which is `YYYY-MM-DD`. Also, currently as our [transactions.csv](https://s3-ap-southeast-1.amazonaws.com/static.propine.com/transactions.csv.zip) only contains 3 types of cryptocurrencies `BTC`, `ETH` and `XRP`, thats why I am validating that too but we can remove that validation if we need to support any other cryptocurrencies in future. For now currency is set as `USD` by default but in future we can take it as an argument too, rest of the code is generalized with default set as `USD`.
@@ -48,11 +48,11 @@ I am using `currency.js` for the monetary operations as there are floating point
 
 Now once the arguments are validated I use them to create strategy as I am using strategy pattern to invoke strategies/algorithm based on the received parameters, for that I have created various strategies in `./strategies` folder. These strategies parses received record from `CSV` and performs the buisness logic accordingly.
 
-So we have 4 types of strategies :- 
+So we have 4 types of strategies :-
 
 #### allPortfolios
 
-If no option is passed then this strategy will be called to calculate the portfolio values converted to the `USD` for all the tokens. 
+If no option is passed then this strategy will be called to calculate the portfolio values converted to the `USD` for all the tokens.
 
 ![alt](images/no.png)
 
@@ -90,12 +90,12 @@ Code for this can be found in `services/CryptoAPI.js`, I have created a generali
 
 ### Utils
 
-There are various pure utility functions I have created like :- 
+There are various pure utility functions I have created like :-
+
 - `DateValidator` to validate the date and its format.
 - `DateToTimestampConvertor` converts date to timestamp in epoch, So basically from commandline we get dateString and then we convert it to timestamp and add `86399` seconds to it to get a last timestamp of particluar day for example if dateString is `2022-11-03` then in timestamp it will be `1667556454` equals to `2022-11-03:T23:59:59`. This is done to ensure we get correct conversion rate from external service for that day.
 - `PortfolioCalculator` adds or subtracts the amount based on the transaction type.
 - `PortfolioCreator` it creates or updates a `portfoliosByToken` map based on the received token, so if token is present it updates the value otherwise it creates new token as a key and adds portfolio details as a value.
-
 
 ### Testcases
 
@@ -106,18 +106,3 @@ Tests can be found in `./test`.
 ### Formatting
 
 Added `eslint` and `prettier` for formattng and conventions.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

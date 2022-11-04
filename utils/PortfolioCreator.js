@@ -1,4 +1,4 @@
-const portfolioCalculator = require("./PortfolioCalculator");
+const updatePortfolioAmount = require("./PortfolioCalculator");
 const Portfolio = require("../models/Portfolio");
 
 const updateOrCreatePortfolio = (line_items, portfoliosByToken) => {
@@ -10,22 +10,20 @@ const updateOrCreatePortfolio = (line_items, portfoliosByToken) => {
 
   let portfolio = portfoliosByToken[transaction.token];
   if (portfolio) {
-    portfoliosByToken[transaction.token] =
-      portfolioCalculator.updatePortfolioAmount(
-        transaction.type,
-        portfolio,
-        transaction.amount
-      );
+    portfoliosByToken[transaction.token] = updatePortfolioAmount(
+      transaction.type,
+      portfolio,
+      transaction.amount
+    );
   } else {
     portfolio = new Portfolio(transaction.token);
-    portfoliosByToken[transaction.token] =
-      portfolioCalculator.updatePortfolioAmount(
-        transaction.type,
-        portfolio,
-        transaction.amount
-      );
+    portfoliosByToken[transaction.token] = updatePortfolioAmount(
+      transaction.type,
+      portfolio,
+      transaction.amount
+    );
   }
   return portfoliosByToken;
 };
 
-module.exports = { updateOrCreatePortfolio };
+module.exports = updateOrCreatePortfolio;

@@ -18,7 +18,12 @@ function parse(filePath, strategy, option) {
 }
 
 const readAndParse = async (filePath, strategy, option) => {
-  return await parse(filePath, strategy, option);
+  try {
+    return await parse(filePath, strategy, option);
+  } catch (error) {
+    console.log("Error while parsing CSV", error);
+    return null;
+  }
 };
 
 module.exports = readAndParse;

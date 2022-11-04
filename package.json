@@ -2,16 +2,16 @@
   "name": "portfolio-calculator",
   "version": "1.0.0",
   "description": "Command line App to fetch the portfolios based on the given parameters",
-  "main": "./bin/index.js",
+  "main": "./bin/start.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test mocha --timeout 5000 --recursive  --exit",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
     "lint:fix": "eslint --fix ."
   },
   "bin": {
-    "portfolioCalculator": "./bin/index.js"
+    "portfolioCalculatorInUSD": "./bin/start.js"
   },
   "repository": {
     "type": "git",
@@ -26,11 +26,14 @@
   "dependencies": {
     "currency.js": "^2.0.4",
     "dotenv": "^16.0.3",
+    "sinon": "^14.0.1",
     "yargs": "^17.6.1"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
+    "mocha": "^10.1.0",
     "prettier": "^2.7.1"
   }
 }

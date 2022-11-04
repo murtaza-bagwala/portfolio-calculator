@@ -33,4 +33,4 @@ const convertCryptoToUSD = async (options) => {
     : conversionRate["USD"];
 };
 
-module.exports = convertCryptoToUSD;
+module.exports = { convertCryptoToUSD };

@@ -1,40 +1,10 @@
-#!/usr/bin/env node
-
 const allPortfoliosByDate = require("../strategies/AllPortfoliosByDate");
 const allPortfolios = require("../strategies/AllPortfolios");
 const portfolioByToken = require("../strategies/PortfolioByToken");
 const portfolioByDateAndToken = require("../strategies/PortfolioByDateAndToken");
 const readAndParse = require("../parsers/CSVParser");
-const convertCryptoToUSD = require("../services/CryptoAPI");
+const CryptoAPI = require("../services/CryptoAPI");
 const dateToTimestampConvertor = require("../utils/DateToTimestampConvertor");
-const yargs = require("yargs");
-const isDateValid = require("../utils/DateValidator");
-
-require("dotenv").config();
-
-const cliOptions = yargs
-  .usage("Usage: -t <token> -d <date>")
-  .option("t", {
-    alias: "token",
-    describe: "Crypto Symbol BTC,ETH,XRP",
-    type: "string",
-  })
-  .option("d", {
-    alias: "date",
-    describe: "date in format YYYY-MM-DD",
-    type: "string",
-  })
-  .check((args) => {
-    if (args.t && !["BTC", "XRP", "ETH"].includes(args.t)) {
-      throw new Error("Invalid token, it should be any of BTC,ETH,XRP");
-    }
-
-    if (args.d && !isDateValid(args.d)) {
-      throw new Error("Invalid date, it should be in a format of YYYY-MM-DD ");
-    }
-
-    return true;
-  }).argv;
 
 const getStrategyBasedOnOptions = (options) => {
   if (options.token && options.timestamp) {
@@ -48,35 +18,41 @@ const getStrategyBasedOnOptions = (options) => {
   }
 };
 
-async function init(options) {
+async function init(options, filePath) {
   console.log("Fetching portfolio value for tokens in USD....");
   options = options || {};
   if (options.date) {
     options.timestamp = dateToTimestampConvertor(options.date);
   }
+  
   const strategy = getStrategyBasedOnOptions(options);
   try {
-    const portfoliosByToken = await readAndParse(
-      "./transactions.csv",
-      strategy,
-      options
-    );
+    const portfoliosByToken = await readAndParse(filePath, strategy, options);
+
+    const usdAmountPerToken = {};
 
     for (const [key, portfolio] of Object.entries(portfoliosByToken)) {
       const apiOptions = {
         token: key,
-        timestamp: options.timestamp,
+        timestamp: options.timestamp ? options.timestamp : null,
       };
-      const usdConversionRate = await convertCryptoToUSD(apiOptions);
+      const usdConversionRate = await CryptoAPI.convertCryptoToUSD(apiOptions);
       console.log(
-        `for token ${key} converted to USD amount is ${portfolio.getAmounConvertedToUSD(
-          usdConversionRate
-        )}`
+        `USD conversion rate for token ${key}, is ${usdConversionRate} `
       );
+      const usdConvertedAmount =
+        portfolio.getAmountConvertedToUSD(usdConversionRate);
+      console.log(
+        `for token ${key} converted to USD amount is ${usdConvertedAmount}`
+      );
+      usdAmountPerToken[key] = usdConvertedAmount;
     }
+
+    return usdAmountPerToken;
   } catch (error) {
     console.log("error occured", error.message);
+    return null;
   }
 }
 
-init(cliOptions);
+module.exports = init;
